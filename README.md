@@ -1,12 +1,12 @@
 Role Name
 =========
 
-This role is used for installing checking if pipenv environment is initialized, and installing dependencies if it is not. Optionally you can force a rebuild of the env, by passing the variable `force: true` to the role
+This role is used for installing checking if pipenv environment is initialized, and installing dependencies if it is not. Optionally you can force a rebuild of the env, by passing the variable `force: true` to the role. Also, you can pass in extra arguments to pipenv with the `pipenv_extra_args` and `pipenv_dev_extra_args` ( for the dev install ).
 
 Requirements
 ------------
 
-Python3 and pip3 need to be installed on the remote system. I handle the pathing for those executables with `python_path` and `pip_path`.
+Python3 and pip3 need to be installed on the remote system. I handle the pathing for python executables with `python_path`.
 
 Role Variables
 --------------
