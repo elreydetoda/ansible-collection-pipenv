@@ -1,0 +1,33 @@
+---
+- hosts: all
+  tasks:
+
+    # adapted from this: https://github.com/pypa/pipenv/issues/363#issuecomment-421310544
+    - name: Check if a virtualenv is already created
+      ansible.builtin.command: 'pipenv --venv'
+      ignore_errors: true
+      args:
+        chdir: '{{ project_root }}'
+      register: pipenv_venv_check_cmd
+      changed_when: False
+
+    - name: Run a pipenv install
+      ansible.builtin.command: 'pipenv --bare install'
+      environment:
+        LANG: '{{ lang }}'
+      args:
+        chdir: '{{ project_root }}'
+      when:
+        - ('No virtualenv' in pipenv_venv_check_cmd.stderr) or
+          (( force_install is defined ) and ( force_install | length > 0 ))
+
+    - name: Run a pipenv install for dev deps...this can take a while...
+      ansible.builtin.command: 'pipenv --bare install --dev {{ pipenv_extra_args | default() }}'
+      environment:
+        LANG: '{{ lang }}'
+      args:
+        chdir: '{{ project_root }}'
+      when:
+        - ('No virtualenv' in pipenv_venv_check_cmd.stderr) or
+          (( force_install is defined ) and ( force_install | length > 0 ))
+        - ( dev_env is defined ) and ( dev_env | length > 0 )
