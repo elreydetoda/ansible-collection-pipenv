@@ -1,2 +1,4 @@
 ---
 project_root: '/vagrant/'
+pipenv_extra_args: ''
+pipenv_dev_extra_args: ''

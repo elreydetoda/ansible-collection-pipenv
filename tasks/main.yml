@@ -9,7 +9,7 @@
   changed_when: False
 
 - name: Run a pipenv install
-  ansible.builtin.command: 'pipenv --bare install'
+  ansible.builtin.command: 'pipenv --bare install {{ pipenv_extra_args | default() }}'
   environment:
     LANG: '{{ lang }}'
   args:
@@ -19,7 +19,7 @@
       (( force_install is defined ) and ( force_install | length > 0 ))
 
 - name: Run a pipenv install for dev deps...this can take a while...
-  ansible.builtin.command: 'pipenv --bare install --dev {{ pipenv_extra_args | default() }}'
+  ansible.builtin.command: 'pipenv --bare install --dev {{ pipenv_dev_extra_args | default() }}'
   environment:
     LANG: '{{ lang }}'
   args:
