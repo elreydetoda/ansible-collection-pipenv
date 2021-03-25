@@ -6,9 +6,6 @@ env:
   global:
     - ROLE_NAME: pipenv
 
-# Use the new container infrastructure
-sudo: false
-
 # Install ansible
 # addons:
 #   apt:
