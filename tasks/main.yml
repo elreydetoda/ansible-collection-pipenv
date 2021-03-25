@@ -16,7 +16,7 @@
     chdir: '{{ project_root }}'
   when:
     - ('No virtualenv' in pipenv_venv_check_cmd.stderr) or
-      (( force_install is defined ) and ( force_install | length > 0 ))
+      (( force_install is defined ) and ( force_install | string | length > 0 ))
 
 - name: Run a pipenv install for dev deps...this can take a while...
   ansible.builtin.command: '{{ python_path }} -m pipenv --bare install --dev {{ pipenv_dev_extra_args | default() }}'
@@ -26,5 +26,5 @@
     chdir: '{{ project_root }}'
   when:
     - ('No virtualenv' in pipenv_venv_check_cmd.stderr) or
-      (( force_install is defined ) and ( force_install | length > 0 ))
-    - ( dev_env is defined ) and ( dev_env | length > 0 )
+      (( force_install is defined ) and ( force_install | string | length > 0 ))
+    - ( dev_env is defined ) and ( dev_env | string | length > 0 )
