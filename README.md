@@ -23,7 +23,7 @@ Example Playbook
 
     - hosts: servers
       roles:
-         - { role: elreydetoda.pipenv, dev_env: true, project_root: '/home/vagrant/' }
+         - { role: elreydetoda.pipenv, dev_env: true, project_root: '/home/vagrant/vagrant/' }
 
 License
 -------
