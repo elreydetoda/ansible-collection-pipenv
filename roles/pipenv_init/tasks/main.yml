@@ -38,7 +38,7 @@
 
 - name: ensuring proper path to pip
   ansible.builtin.set_fact:
-    pip3_path: '{{ pip3_state.stdout | default("/usr/bin/pip3")'
+    pip3_path: '{{ pip3_state.stdout | default("/usr/bin/pip3") }}'
 
 - name: installing pipenv
   ansible.builtin.pip:
