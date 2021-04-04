@@ -1,2 +1,44 @@
 ---
 # tasks file for pipenv_init
+
+# used from: https://dev.to/setevoy/ansible-check-if-a-package-installed-on-a-remote-system-4402
+- name: Gather the package facts
+  ansible.builtin.package_facts:
+    manager: auto
+
+# idea from: https://www.reddit.com/r/ansible/comments/fj0gza/how_to_check_if_a_binary_is_in_path/fkk7cxl
+- name: check if pip3 is installed
+  ansible.builtin.command:
+    cmd: command -v pip3
+  ignore_errors: true
+  changed_when: false
+  register: pip3_state
+
+- name: 'Update apt cache'
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 3600
+  when: ansible_facts['os_family'] == "Debian"
+
+- name: installing python3
+  ansible.builtin.package:
+    name: 'python3'
+    state: latest
+
+- name: installing python3-pip
+  ansible.builtin.package:
+    name: 'python3-pip'
+    state: latest
+  when:
+    - ( ansible_facts['os_family'] == "Debian" )
+    - ( pip3_state.rc != 0 )
+
+- name: ensuring proper path to pip
+  ansible.builtin.set_fact:
+    pip3_path: '{{ pip3_state.stdout | default("/usr/bin/pip3")'
+
+- name: installing pipenv
+  ansible.builtin.pip:
+    name: pipenv
+    executable: '{{ pip3_path }}'
+    state: present
