@@ -18,17 +18,20 @@
   ansible.builtin.apt:
     update_cache: true
     cache_valid_time: 3600
+  become: true
   when: ansible_facts['os_family'] == "Debian"
 
 - name: installing python3
   ansible.builtin.package:
     name: 'python3'
     state: latest
+  become: true
 
 - name: installing python3-pip
   ansible.builtin.package:
     name: 'python3-pip'
     state: latest
+  become: true
   when:
     - ( ansible_facts['os_family'] == "Debian" )
     - ( pip3_state.rc != 0 )
