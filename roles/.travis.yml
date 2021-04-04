@@ -6,7 +6,7 @@ services: docker
 env:
   global:
     - COLLECTION_NAMESPACE: 'elreydetoda'
-    - COLLECTION_NAME: 'pipenv'
+    - COLLECTION_NAME: 'virtualization'
   matrix:
     - DISTRO: centos8
       PYTHON_INTERPRETER: /usr/bin/python3
@@ -34,7 +34,7 @@ script:
 
 deploy:
   provider: script
-  script: ansible-playbook -i 'localhost,' ci/deploy-playbook.yml -e "collection_name=$COLLECTION_NAME" -e "namespace=$COLLECTION_NAMESPACE" -e "tag=$TRAVIS_TAG"
+  script: ansible-playbook -i 'localhost,' ci/deploy-playbook.yml -e "tag=$TRAVIS_TAG"
   'on':
     tags: true
     condition: $DISTRO = centos8
