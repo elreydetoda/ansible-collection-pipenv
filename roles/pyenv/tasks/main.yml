@@ -34,6 +34,8 @@
   loop: '{{ auto_completion_shell }}'
   when: enable_auto_completion
 
+- debug:
+    var: build_deps
 - name: installing dependencies
   ansible.builtin.package:
     name: '{{ loop }}'
