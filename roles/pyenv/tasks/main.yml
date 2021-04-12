@@ -31,6 +31,7 @@
     regex: '{{ item.regexp }}'
     line: '{{ item.line }}'
     path: '{{ shell_conf_path }}'
+  loop: '{{ auto_completion_shell }}'
   when: enable_auto_completion
 
 - name: installing dependencies
