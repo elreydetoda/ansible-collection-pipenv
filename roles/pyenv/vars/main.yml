@@ -1,0 +1,39 @@
+---
+# vars file for pyenv
+enable_auto_completion: true
+pyenv_update: 'no'
+
+# https://github.com/pyenv/pyenv/wiki/Home/f3ebc17f67ba23e05771fd78468cd1cd03204fc8#suggested-build-environment
+debian_deps:
+  - make
+  - build-essential
+  - libssl-dev
+  - zlib1g-dev
+  - libbz2-dev
+  - libreadline-dev
+  - libsqlite3-dev
+  - wget
+  - curl
+  - llvm
+  - libncurses5-dev
+  - xz-utils
+  - tk-dev
+  - libxml2-dev
+  - libxmlsec1-dev
+  - libffi-dev
+  - liblzma-dev
+  - git
+
+# https://github.com/avanov/ansible-galaxy-pyenv/blob/88448a3cd486e52de9175e14018ea5984c74e1ea/defaults/main.yml#L43-L54
+red_hat_deps:
+  - make
+  - git
+  - gcc
+  - libselinux-python
+  - zlib-devel
+  - openssl-devel
+  - bzip2-devel
+  - readline-devel
+  - libffi-devel
+  - sqlite-devel
+  - gdbm-devel

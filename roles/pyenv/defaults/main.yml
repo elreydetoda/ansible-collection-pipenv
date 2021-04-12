@@ -1,0 +1,44 @@
+---
+# defaults file for pyenv
+# https://github.com/pyenv/pyenv-installer/blob/dd3f7d0914c5b4a416ca71ffabdf2954f2021596/bin/pyenv-installer#L6-L8
+pyenv_root: "{{ ansible_facts['user_dir'] }}/.pyenv"
+
+# https://github.com/pyenv/pyenv-installer/blob/dd3f7d0914c5b4a416ca71ffabdf2954f2021596/bin/pyenv-installer#L26-L32
+shell_for_autocompletion: "{{ ansible_facts['user_shell'].split('/') | last }}"
+
+# https://github.com/pyenv/pyenv-installer/blob/dd3f7d0914c5b4a416ca71ffabdf2954f2021596/bin/pyenv-installer#L61-L84
+auto_completion_dir: "{{ ansible_facts['user_dir'] }}"
+fish_conf_path: "{{ auto_completion_dir }}/.config/fish/config.fish"
+bash_conf_path: "{{ auto_completion_dir }}/.bashrc"
+zsh_conf_path: "{{ auto_completion_dir }}/.zshrc"
+ksh_conf_path: "{{ auto_completion_dir }}/.profile"
+
+##
+# https://github.com/pyenv/pyenv-installer/blob/dd3f7d0914c5b4a416ca71ffabdf2954f2021596/bin/pyenv-installer#L86-L101
+fish_auto_completion:
+  - { 'regexp': '^set -x PATH "{{ pyenv_root }}/bin" \$PATH$', 'line': 'set -x PATH "{{ pyenv_root }}/bin" $PATH'}
+  - { 'regexp': '^status --is-interactive; and \. \(pyenv init -|psub\)$', 'line': 'status --is-interactive; and . (pyenv init -|psub)'}
+  - { 'regexp': '^status --is-interactive; and \. \(pyenv virtualenv-init -|psub\)$', 'line': 'status --is-interactive; and . (pyenv virtualenv-init -|psub)'}
+
+auto_completion:
+  - { 'regexp': '^export PATH="{{ pyenv_root }}/bin:\$PATH"$', 'line': 'export PATH="{{ pyenv_root }}/bin:$PATH"'}
+  - { 'regexp': '^eval "\$\(pyenv init -\)"$', 'line': 'eval "$(pyenv init -)"'}
+  - { 'regexp': '^eval "\$\(pyenv virtualenv-init -\)"$', 'line': 'eval "$(pyenv virtualenv-init -)"'}
+##
+
+# https://github.com/pyenv/pyenv-installer/blob/dd3f7d0914c5b4a416ca71ffabdf2954f2021596/bin/pyenv-installer#L48-L52
+git_base_domain: 'https://github.com'
+py_env_base_url: '{{ git_base_domain }}/pyenv'
+plugin_dir: '{{ pyenv_root }}/plugins'
+
+##
+# https://github.com/pyenv/pyenv-installer/blob/dd3f7d0914c5b4a416ca71ffabdf2954f2021596/bin/pyenv-installer#L54-L59
+plugins:
+  - 'doctor'
+  - 'installer'
+  - 'update'
+  - 'virtualenv'
+  - 'which-ext'
+
+plugin_prefix: 'pyenv-'
+##

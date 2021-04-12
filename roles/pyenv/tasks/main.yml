@@ -1,0 +1,41 @@
+---
+# tasks file for pyenv
+
+- name: add pyenv repo
+  ansible.builtin.git:
+    repo: '{{ py_env_base_url }}/pyenv.git'
+    dest: '{{ pyenv_root }}'
+    update: '{{ pyenv_update }}'
+
+- name: add pyenv plugin repos
+  ansible.builtin.git:
+    repo: '{{ py_env_base_url }}/{{ plugin_prefix }}{{ item }}.git'
+    dest: '{{ plugin_dir }}/{{ plugin_prefix }}{{ item }}'
+    update: '{{ pyenv_update }}'
+  loop: '{{ plugins }}'
+
+- ansible.builtin.set_fact:
+    auto_completion_shell: "{{ lookup('vars', shell_for_autocompletion + '_auto_completion') }}"
+  when: shell_for_autocompletion == 'fish'
+
+- ansible.builtin.set_fact:
+    auto_completion_shell: "{{ lookup('vars', 'auto_completion') }}"
+  when: auto_completion_shell is undefined
+
+- ansible.builtin.set_fact:
+    build_deps: "{{ lookup('vars', ansible_os_family | lower + '_deps' )}}"
+    shell_conf_path: "{{ lookup('vars', shell_for_autocompletion + '_conf_path' )}}"
+
+- name: adding autocompletion
+  ansible.builtin.lineinfile:
+    regex: '{{ item.regexp }}'
+    line: '{{ item.line }}'
+    path: '{{ shell_conf_path }}'
+  when: enable_auto_completion
+
+- name: installing dependencies
+  ansible.builtin.package:
+    name: '{{ loop }}'
+    state: present
+  loop: '{{ build_deps }}'
+  become: true
