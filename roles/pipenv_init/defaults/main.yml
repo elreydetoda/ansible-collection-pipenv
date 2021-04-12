@@ -1,2 +1,3 @@
 ---
 # defaults file for pipenv_init
+pip_path: '/usr/bin/pip3'
