@@ -25,7 +25,7 @@ debian_deps:
   - git
 
 # https://github.com/avanov/ansible-galaxy-pyenv/blob/88448a3cd486e52de9175e14018ea5984c74e1ea/defaults/main.yml#L43-L54
-red_hat_deps:
+redhat_deps:
   - make
   - git
   - gcc
