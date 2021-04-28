@@ -36,7 +36,6 @@
 
 - name: installing dependencies
   ansible.builtin.package:
-    name: '{{ item }}'
+    name: '{{ build_deps }}'
     state: present
-  loop: '{{ build_deps }}'
   become: true
