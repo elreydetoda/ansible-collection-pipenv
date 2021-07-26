@@ -14,11 +14,6 @@
   changed_when: false
   register: pip3_state
 
-- name: debug pip path
-  debug:
-    var: pip3_state
-  when: debug_ans
-
 - name: 'Update apt cache'
   ansible.builtin.apt:
     update_cache: true
