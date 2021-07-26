@@ -9,7 +9,7 @@
 # idea from: https://www.reddit.com/r/ansible/comments/fj0gza/how_to_check_if_a_binary_is_in_path/fkk7cxl
 - name: check if pip3 is installed
   ansible.builtin.command:
-    cmd: command -v pip3
+    cmd: which pip3
   ignore_errors: true
   changed_when: false
   register: pip3_state
